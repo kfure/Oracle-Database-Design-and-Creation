@@ -1,6 +1,3 @@
-/* BEGIN TABLE CREATION SCRIPT */
-
-
 CREATE TABLE AREAS 
 (
 area_id char(5),

@@ -1,5 +1,4 @@
 
-
 drop sequence AREA_SEQ;
 drop sequence BRANCH_SEQ;
 drop sequence CLIENTS_SEQ;

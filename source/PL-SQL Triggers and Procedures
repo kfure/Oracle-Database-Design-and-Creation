@@ -1,0 +1,20 @@
+CREATE OR REPLACE TRIGGER csr_area_limits_assign_team
+    BEFORE INSERT OR UPDATE OF teamID
+    ON assign_teams_to_clients
+    FOR EACH ROW
+DECLARE
+    area_count integer;
+    CURSOR CSRS IS SELECT csr_empid FROM form_teams
+        WHERE teamID = :new.teamID;
+BEGIN
+    FOR C IN CSRS LOOP
+        area_count := 0;   
+        SELECT count(distinct area_ID) INTO area_count FROM assign_teams_to_clients 
+        NATURAL JOIN client_sites 
+        WHERE status = 'active' AND teamID IN (
+            SELECT teamID FROM form_teams where csr_empid = C.csr_empid);
+        IF area_count >= 5 THEN
+            raise_application_error(-20010, 
+            'Error: Change not made. Customer service representative '||C.csr_empid||' would have more than 5 areas.'); 
+        END IF;
+    END LOOP;

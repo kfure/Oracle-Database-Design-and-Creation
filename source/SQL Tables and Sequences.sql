@@ -1,4 +1,4 @@
-/* DROP TABLE SEQUENCE SCRIPT */
+
 
 drop sequence AREA_SEQ;
 drop sequence BRANCH_SEQ;
